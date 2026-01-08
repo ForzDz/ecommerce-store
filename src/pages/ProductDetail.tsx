@@ -417,6 +417,7 @@ const ProductDetail: React.FC = () => {
                 onWilayaChange={(val) => handleInputChange('wilaya', val)}
                 onCommuneChange={(val) => handleInputChange('commune', val)}
                 errors={{ wilaya: errors.wilaya, commune: errors.commune }}
+                disabledCommune={formData.deliveryType === 'desk'}
               />
 
               {/* Address Field - Row 3 */}
@@ -431,9 +432,10 @@ const ProductDetail: React.FC = () => {
                   type="text"
                   value={formData.address}
                   onChange={(e) => handleInputChange('address', e.target.value)}
-                  className={`input-field w-full text-black text-right ${errors.address ? 'border-destructive' : ''}`}
-                  placeholder="أدخل عنوانك الكامل"
+                  className={`input-field w-full text-black text-right ${errors.address ? 'border-destructive' : ''} ${formData.deliveryType === 'desk' ? 'opacity-50 cursor-not-allowed bg-gray-100' : ''}`}
+                  placeholder={formData.deliveryType === 'desk' ? '-' : "أدخل عنوانك الكامل"}
                   dir="rtl"
+                  disabled={formData.deliveryType === 'desk'}
                 />
                 {errors.address && (
                   <p className="text-sm text-destructive mt-1 text-right">{errors.address}</p>
@@ -451,7 +453,16 @@ const ProductDetail: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <button
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, deliveryType: 'desk' }))}
+                    onClick={() => {
+                        setFormData(prev => ({ 
+                            ...prev, 
+                            deliveryType: 'desk',
+                            commune: '-', // Auto-fill to pass validation
+                            address: '-'  // Auto-fill to pass validation
+                        }));
+                        // Clear errors for these fields since we auto-filled them
+                        setErrors(prev => ({ ...prev, commune: undefined, address: undefined }));
+                    }}
                     className={`p-4 rounded-lg border flex flex-col items-center justify-center gap-2 transition-all ${
                       formData.deliveryType === 'desk'
                         ? 'border-primary bg-primary/5 ring-1 ring-primary'
@@ -465,7 +476,12 @@ const ProductDetail: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, deliveryType: 'home' }))}
+                    onClick={() => setFormData(prev => ({ 
+                        ...prev, 
+                        deliveryType: 'home',
+                        commune: '', // Reset so user must choose
+                        address: ''  // Reset so user must type
+                    }))}
                     className={`p-4 rounded-lg border flex flex-col items-center justify-center gap-2 transition-all ${
                       formData.deliveryType === 'home'
                         ? 'border-primary bg-primary/5 ring-1 ring-primary'

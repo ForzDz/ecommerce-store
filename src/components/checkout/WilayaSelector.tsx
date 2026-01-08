@@ -8,6 +8,7 @@ interface WilayaSelectorProps {
   onWilayaChange: (wilaya: string) => void;
   onCommuneChange: (commune: string) => void;
   errors?: { wilaya?: string; commune?: string };
+  disabledCommune?: boolean;
 }
 
 const WilayaSelector: React.FC<WilayaSelectorProps> = ({
@@ -15,7 +16,8 @@ const WilayaSelector: React.FC<WilayaSelectorProps> = ({
   selectedCommune,
   onWilayaChange,
   onCommuneChange,
-  errors
+  errors,
+  disabledCommune = false
 }) => {
   const [isWilayaOpen, setIsWilayaOpen] = useState(false);
   const [isCommuneOpen, setIsCommuneOpen] = useState(false);
@@ -130,15 +132,15 @@ const WilayaSelector: React.FC<WilayaSelectorProps> = ({
 
         <button
           type="button"
-          disabled={!selectedWilaya}
+          disabled={!selectedWilaya || disabledCommune}
           onClick={() => {
             setIsCommuneOpen(!isCommuneOpen);
             setIsWilayaOpen(false);
           }}
-          className={`flex items-center justify-between w-full h-12 px-4 py-2 bg-white border ${errors?.commune ? 'border-destructive' : 'border-[#e5e5e5]'} rounded-xl text-right text-sm transition-all hover:border-primary shadow-sm ${!selectedWilaya ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`flex items-center justify-between w-full h-12 px-4 py-2 bg-white border ${errors?.commune ? 'border-destructive' : 'border-[#e5e5e5]'} rounded-xl text-right text-sm transition-all hover:border-primary shadow-sm ${(!selectedWilaya || disabledCommune) ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <span className={selectedCommune ? 'text-black font-semibold' : 'text-[#666]'}>
-            {selectedCommune || 'اختر البلدية'}
+            {selectedCommune || (disabledCommune ? '-' : 'اختر البلدية')}
           </span>
           <ChevronDown className={`w-5 h-5 text-black transition-transform ${isCommuneOpen ? 'rotate-180' : ''}`} />
         </button>
