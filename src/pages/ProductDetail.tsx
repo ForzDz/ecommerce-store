@@ -236,22 +236,48 @@ const ProductDetail: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div className="container-custom py-16">
-        <div className="max-w-lg mx-auto text-center animate-fade-in">
-          <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-success" />
+      <div className="container-custom py-16 min-h-[60vh] flex items-center justify-center">
+        <div className="max-w-md w-full mx-auto text-center animate-in fade-in zoom-in duration-500 slide-in-from-bottom-4">
+          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce shadow-lg ring-8 ring-green-50">
+            <CheckCircle className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-4">تم تأكيد الطلب!</h1>
-          <p className="text-muted-foreground mb-6">
-            شكراً لطلبك. سوف تتلقى مكالمة تأكيد قريباً.
+          
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
+            تم تأكيد الطلب بنجاح!
+          </h1>
+          
+          <p className="text-gray-600 mb-8 text-lg">
+            شكراً لثقتكم بنا. سيتم الاتصال بكم قريباً لتأكيد الطلب وترتيب عملية التوصيل.
           </p>
-          <div className="bg-secondary p-6 rounded-lg mb-8">
-            <p className="text-sm text-muted-foreground mb-1">رقم الطلب</p>
-            <p className="text-2xl font-bold">{orderNumber}</p>
+
+          <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 mb-8 transform transition-all hover:scale-105 duration-300 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <p className="text-sm text-gray-500 mb-2 uppercase tracking-wider font-semibold">رقم الطلب</p>
+            <p className="text-3xl font-mono font-bold tracking-wider text-primary">{orderNumber}</p>
           </div>
-          <Link to="/" className="btn-primary inline-block">
-            العودة إلى الصفحة الرئيسية
-          </Link>
+
+          <div className="space-y-4">
+            <a 
+              href="tel:0556482798"
+              className="flex items-center justify-center gap-3 w-full p-4 bg-secondary/50 hover:bg-secondary rounded-xl transition-colors border border-secondary group"
+            >
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                <Phone className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500 font-medium">تحتاج مساعدة؟ اتصل بنا</p>
+                <p className="text-lg font-bold dir-ltr">0556 48 27 98</p>
+              </div>
+            </a>
+
+            <Link 
+              to="/" 
+              className="btn-primary w-full flex items-center justify-center gap-2 py-4 rounded-xl shadow-lg hover:shadow-primary/25 transition-all text-lg"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              العودة للتسوق
+            </Link>
+          </div>
         </div>
       </div>
     );
