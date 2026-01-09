@@ -49,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
 
         {/* Quick View on Hover */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="hidden md:block absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Link
             to={`/product/${product.id}`}
             className="w-full btn-primary block text-center text-sm"
